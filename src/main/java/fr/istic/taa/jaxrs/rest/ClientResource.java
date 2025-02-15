@@ -22,41 +22,41 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
-@Path("/admin")
+@Path("/client")
 @Produces({"application/json"})
-public class AministrateurResource {
+public class ClientResource {
 
-  AdministrateurService administrateurService = new AdministrateurService();
+  ClientService clientService = new ClientService();
 
 
 
 @GET
 @Path("/{id}")
 @Produces(MediaType.APPLICATION_JSON) // On indique que la réponse est en HTML
-public Response getAdministrateurById(@PathParam("id") Long id) {
-    AdministrateurDto admin = administrateurService.getAdministrateurById(id);
+public Response getClientById(@PathParam("id") Long id) {
+    ClientDto client = clientService.getClientById(id);
 
-    if (admin == null) {
+    if (client == null) {
         return Response.status(Response.Status.NOT_FOUND)
-                       .entity("{\"message\": \"Aucun administrateur trouvé.\"}")
+                       .entity("{\"message\": \"Aucun client trouvé.\"}")
                        .build();
     }
 
-    return Response.ok(admin).build();
+    return Response.ok(client).build();
 }
 
 
 @GET
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON) // Indique qu'on retourne du JSON
-public Response getAllAdministrateurs() {
-    List<AdministrateurDto> administrateurs = administrateurService.getAllAdministrateurs();
+public Response getAllClients() {
+    List<ClientDto> clients = clientService.getAllClients();
 
-    if (administrateurs.isEmpty()) {
-        return Response.ok("{\"message\": \"Aucun administrateur trouvé.\"}").build();
+    if (clients.isEmpty()) {
+        return Response.ok("{\"message\": \"Aucun client trouvé.\"}").build();
     }
 
-    return Response.ok(administrateurs).build();
+    return Response.ok(clients).build();
 }
 
 
@@ -64,25 +64,25 @@ public Response getAllAdministrateurs() {
 @Path("/add")
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED) // Accepte les données de formulaire
 @Produces(MediaType.APPLICATION_JSON) // Retourne du JSON
-public Response createAdmin(
+public Response createClient(
         @FormParam("nom") String nom,
         @FormParam("prenom") String prenom,
         @FormParam("email") String email,
         @FormParam("password") String password) {
 
-    // Création de l'administrateur
-    AdministrateurDto admin = new AdministrateurDto();
-    admin.setNom(nom);
-    admin.setPrenom(prenom);
-    admin.setEmail(email);
-    admin.setPassword(password);
+    // Création de l'client
+    ClientDto client = new ClientDto();
+    client.setNom(nom);
+    client.setPrenom(prenom);
+    client.setEmail(email);
+    client.setPassword(password);
 
     // Sauvegarde via le service
-    administrateurService.createAdministrateur(admin);
+    clientService.createClient(client);
 
     // Retourner une réponse JSON
     return Response.status(Response.Status.CREATED)
-                   .entity(admin)
+                   .entity(client)
                    .build();
 }
 
@@ -90,47 +90,47 @@ public Response createAdmin(
 @Path("/update/{id}")
 @Consumes(MediaType.APPLICATION_JSON) // Accepte les données en JSON
 @Produces(MediaType.APPLICATION_JSON) // Retourne du JSON
-public Response updateAdmin(@PathParam("id") long id, AdministrateurDto adminDetails) {
-    if (adminDetails == null) {
+public Response updateClient(@PathParam("id") long id, ClientDto clientDetails) {
+    if (clientDetails == null) {
         return Response.status(Response.Status.BAD_REQUEST)
                 .entity("{\"error\": \"Données invalides\"}")
                 .build();
     }
 
-    // Récupération de l'administrateur existant
-    AdministrateurDto admindto = administrateurService.getAdministrateurById(id);
-    if (admindto == null) {
+    // Récupération du client existant
+    ClientDto clientdto = clientService.getClientById(id);
+    if (clientdto == null) {
         return Response.status(Response.Status.NOT_FOUND)
-                .entity("{\"error\": \"Administrateur non trouvé\"}")
+                .entity("{\"error\": \"Client non trouvé\"}")
                 .build();
     }
 
     // Mise à jour des champs (vérifier null)
-    if (adminDetails.getNom() != null && !adminDetails.getNom().isEmpty()) {
-        admindto.setNom(adminDetails.getNom());
+    if (clientDetails.getNom() != null && !clientDetails.getNom().isEmpty()) {
+        clientdto.setNom(clientDetails.getNom());
     }
-    if (adminDetails.getPrenom() != null && !adminDetails.getPrenom().isEmpty()) {
-        admindto.setPrenom(adminDetails.getPrenom());
+    if (clientDetails.getPrenom() != null && !clientDetails.getPrenom().isEmpty()) {
+        clientdto.setPrenom(clientDetails.getPrenom());
     }
-    if (adminDetails.getEmail() != null && !adminDetails.getEmail().isEmpty()) {
-        admindto.setEmail(adminDetails.getEmail());
+    if (clientDetails.getEmail() != null && !clientDetails.getEmail().isEmpty()) {
+        clientdto.setEmail(clientDetails.getEmail());
     }
 
     // Mise à jour dans la base de données
-    administrateurService.updateAdministrateur(id, admindto);
+    clientService.updateClient(id, clientdto);
 
     // Retourner l'administrateur mis à jour
-    return Response.ok(admindto).build();
+    return Response.ok(clientdto).build();
 }
 
 
 
 @DELETE
 @Path("/delete/{id}")
-public Response deleteAdmin(@PathParam("id") Long id, @Context UriInfo uriInfo) {
+public Response deleteClient(@PathParam("id") Long id, @Context UriInfo uriInfo) {
     try {
-        administrateurService.deleteAdministrateur(id);
-        return Response.ok().entity("Administrateur supprimé avec succès.").build();
+        clientService.deleteClient(id);
+        return Response.ok().entity("Client supprimé avec succès.").build();
     } catch (IllegalArgumentException e) {
         return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
     }
