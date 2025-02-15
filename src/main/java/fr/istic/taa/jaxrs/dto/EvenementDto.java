@@ -3,6 +3,8 @@ package fr.istic.taa.jaxrs.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import fr.istic.taa.jaxrs.domain.Organisateur;
 import fr.istic.taa.jaxrs.domain.Ticket;
 import fr.istic.taa.jaxrs.domain.statutEvent;
@@ -12,6 +14,7 @@ public class EvenementDto {
 
     private Long id;
     private String nomEvent;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
     private String lieu;
     private String description;
@@ -53,6 +56,8 @@ public class EvenementDto {
     public void setNomEvent(String nomEvent) {
         this.nomEvent = nomEvent;
     }
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     public LocalDateTime getDate() {
         return date;
     }
