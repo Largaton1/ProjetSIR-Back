@@ -65,17 +65,7 @@ public Response getAllAdministrateurs() {
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED) // Accepte les données de formulaire
 @Produces(MediaType.APPLICATION_JSON) // Retourne du JSON
 public Response createAdmin(
-        @FormParam("nom") String nom,
-        @FormParam("prenom") String prenom,
-        @FormParam("email") String email,
-        @FormParam("password") String password) {
-
-    // Création de l'administrateur
-    AdministrateurDto admin = new AdministrateurDto();
-    admin.setNom(nom);
-    admin.setPrenom(prenom);
-    admin.setEmail(email);
-    admin.setPassword(password);
+      AdministrateurDto admin) {
 
     // Sauvegarde via le service
     administrateurService.createAdministrateur(admin);

@@ -64,18 +64,7 @@ public Response getAllOrganisateurs() {
 @Path("/add")
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED) // Accepte les données de formulaire
 @Produces(MediaType.APPLICATION_JSON) // Retourne du JSON
-public Response createOrganisateur(
-        @FormParam("nom") String nom,
-        @FormParam("prenom") String prenom,
-        @FormParam("email") String email,
-        @FormParam("password") String password) {
-
-    // Création d'un organisateur
-    OrganisateurDto organisateur = new OrganisateurDto();
-    organisateur.setNom(nom);
-    organisateur.setPrenom(prenom);
-    organisateur.setEmail(email);
-    organisateur.setPassword(password);
+public Response createOrganisateur(OrganisateurDto organisateur) {
 
     // Sauvegarde via le service
     organisateurService.createOrganisateur(organisateur);

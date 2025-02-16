@@ -34,6 +34,7 @@ public class EvenementService {
         evenement.setStatut(evenementDto.getStatut());
         evenement.setTickets(ticketDao.findAll());
         //evenement.setOrganisateur(organisateurDao.findOne(evenementDto.getOrganisateur()));
+        //evenement.setOrganisateur(organisateurDao.findOne(1L)); // Organisateur par défaut
         evenementDao.save(evenement);
         return new EvenementDto(evenement.getId(), evenement.getNomEvent(), evenement.getDate(), evenement.getLieu(), evenement.getDescription(), evenement.getCapacite(), evenement.getStatut(), null, evenement.getOrganisateur());
     }

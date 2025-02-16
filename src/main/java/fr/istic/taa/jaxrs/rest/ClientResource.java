@@ -65,17 +65,9 @@ public Response getAllClients() {
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED) // Accepte les données de formulaire
 @Produces(MediaType.APPLICATION_JSON) // Retourne du JSON
 public Response createClient(
-        @FormParam("nom") String nom,
-        @FormParam("prenom") String prenom,
-        @FormParam("email") String email,
-        @FormParam("password") String password) {
+        ClientDto client) {
 
-    // Création de l'client
-    ClientDto client = new ClientDto();
-    client.setNom(nom);
-    client.setPrenom(prenom);
-    client.setEmail(email);
-    client.setPassword(password);
+  
 
     // Sauvegarde via le service
     clientService.createClient(client);

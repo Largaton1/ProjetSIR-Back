@@ -2,6 +2,8 @@ package fr.istic.taa.jaxrs.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import fr.istic.taa.jaxrs.domain.Evenement;
 
 public class OrganisateurDto extends PersonneDto{
@@ -18,10 +20,12 @@ public class OrganisateurDto extends PersonneDto{
         this.evenements = evenements;
     }
 
+    @JsonManagedReference
     public List<EvenementDto> getEvenements() {
         return evenements;
     }
 
+    @JsonManagedReference
     public void setEvenements(List<EvenementDto> evenements) {
         this.evenements = evenements;
     }

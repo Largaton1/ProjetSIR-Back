@@ -43,13 +43,13 @@ public class JpaTest {
 		
 
 
-			Client client = new Client();
-			ClientDao daoClient = new ClientDao();
-			client.setNom("Olivier");
-			client.setPrenom("Martin");
-			client.setEmail("mat@gmail.com");
-			client.setPassword("12345678");
-			daoClient.save(client);
+			// Client client = new Client();
+			// ClientDao daoClient = new ClientDao();
+			// client.setNom("Olivier");
+			// client.setPrenom("Martin");
+			// client.setEmail("mat@gmail.com");
+			// client.setPassword("12345678");
+			// daoClient.save(client);
 			// Evenement event = new Evenement();
 			// EvenementDao dao = new EvenementDao();
 			// event.setNomEvent("Concert Geant");

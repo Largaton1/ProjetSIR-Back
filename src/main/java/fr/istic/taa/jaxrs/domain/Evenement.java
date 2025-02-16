@@ -1,9 +1,10 @@
 package fr.istic.taa.jaxrs.domain;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -24,7 +25,7 @@ public class Evenement implements Serializable {
 
     private Long id;
     private String nomEvent;
-    private LocalDateTime date;
+    private Date date;
     private String lieu;
     private String description;
     private int capacite;
@@ -43,7 +44,7 @@ public class Evenement implements Serializable {
     
 
     
-    public Evenement(Long id, String nomEvent, LocalDateTime date, String lieu, String description, int capacite,
+    public Evenement(Long id, String nomEvent, Date date, String lieu, String description, int capacite,
             statutEvent statut) {
         this.id = id;
         this.nomEvent = nomEvent;
@@ -71,10 +72,10 @@ public class Evenement implements Serializable {
     }
 
    
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
     public String getLieu() {
@@ -116,11 +117,12 @@ public class Evenement implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "organisateur_id", nullable = false)
+    @JsonBackReference
     public Organisateur getOrganisateur() {
         return organisateur;
     }
 
-
+    @JsonBackReference
     public void setOrganisateur(Organisateur organisateur) {
         this.organisateur = organisateur;
     }
