@@ -13,4 +13,3 @@ node_modulespackage-lock
 build/
 .mvn/.develocity
 spring-data-jpa/gen
-webapp/ajout_admin.html
