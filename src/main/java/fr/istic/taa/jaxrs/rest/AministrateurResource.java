@@ -115,6 +115,9 @@ public Response updateAdmin(@PathParam("id") long id, AdministrateurDto adminDet
     if (adminDetails.getEmail() != null && !adminDetails.getEmail().isEmpty()) {
         admindto.setEmail(adminDetails.getEmail());
     }
+    if (adminDetails.getPassword() != null && !adminDetails.getPassword().isEmpty()) {
+        admindto.setPassword(adminDetails.getPassword());
+    }
 
     // Mise à jour dans la base de données
     administrateurService.updateAdministrateur(id, admindto);

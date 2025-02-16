@@ -48,7 +48,8 @@ public class OrganisateurService {
         if (organisateur != null) {
             organisateur.setNom(dto.getNom());
             organisateur.setPrenom(dto.getPrenom());
-            organisateur.setPassword(dto.getPassword()); // Email ne doit pas changer
+            organisateur.setEmail(dto.getEmail());// Email ne doit pas changer
+            organisateur.setPassword(dto.getPassword()); 
             organisateurDao.update(organisateur);
             return new OrganisateurDto(organisateur.getId(), organisateur.getNom(), organisateur.getPrenom(), organisateur.getEmail(), organisateur.getPassword(), null);
         }

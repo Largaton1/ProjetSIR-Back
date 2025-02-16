@@ -36,6 +36,7 @@ public class TestApplication extends Application {
         clazzes.add(OpenApiResource.class);
         clazzes.add(fr.istic.taa.jaxrs.rest.AministrateurResource.class);
         clazzes.add(fr.istic.taa.jaxrs.rest.ClientResource.class);
+        clazzes.add(fr.istic.taa.jaxrs.rest.OrganisateurResource.class);
         clazzes.add(fr.istic.taa.jaxrs.rest.SwaggerResource.class);
 //        clazzes.add(AcceptHeaderOpenApiResource.class);
          

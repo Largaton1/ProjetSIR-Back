@@ -115,11 +115,13 @@ public Response updateClient(@PathParam("id") long id, ClientDto clientDetails) 
     if (clientDetails.getEmail() != null && !clientDetails.getEmail().isEmpty()) {
         clientdto.setEmail(clientDetails.getEmail());
     }
-
+    if (clientDetails.getPassword() != null && !clientDetails.getPassword().isEmpty()) {
+        clientdto.setPassword(clientDetails.getPassword());
+    }
     // Mise à jour dans la base de données
     clientService.updateClient(id, clientdto);
 
-    // Retourner l'administrateur mis à jour
+    // Retourner le client mis à jour
     return Response.ok(clientdto).build();
 }
 
