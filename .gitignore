@@ -9,4 +9,3 @@ target/
 build/
 .mvn/.develocity
 spring-data-jpa/gen
-webapp/ajout_admin.html

@@ -50,7 +50,8 @@ public class AdministrateurService {
         if (admin != null) {
             admin.setNom(dto.getNom());
             admin.setPrenom(dto.getPrenom());
-            admin.setPassword(dto.getPassword()); // Email ne doit pas changer
+            admin.setEmail(dto.getEmail());
+            admin.setPassword(dto.getPassword()); 
             administrateurDao.update(admin);
             return new AdministrateurDto(admin.getId(), admin.getNom(), admin.getPrenom(), admin.getEmail(), admin.getPassword(), null);
         }

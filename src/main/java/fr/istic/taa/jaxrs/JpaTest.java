@@ -26,12 +26,12 @@ public class JpaTest {
 		
 		try {
 
-			Administrateur admin = new Administrateur();
-			AdministrateurDao daoAdmin = new AdministrateurDao();
-            admin.setNom("Jean");
-			admin.setEmail("jean@example.com");
-			admin.setPassword("12345678");
-			daoAdmin.save(admin);
+			// Administrateur admin = new Administrateur();
+			// AdministrateurDao daoAdmin = new AdministrateurDao();
+            // admin.setNom("Jean");
+			// admin.setEmail("jean@example.com");
+			// admin.setPassword("12345678");
+			// daoAdmin.save(admin);
             
 
             Organisateur organisateur = new Organisateur();
@@ -41,6 +41,15 @@ public class JpaTest {
 			 organisateur.setPassword("12345678");
              daoOrganisateur.save(organisateur);
 		
+
+
+			// Client client = new Client();
+			// ClientDao daoClient = new ClientDao();
+			// client.setNom("Olivier");
+			// client.setPrenom("Martin");
+			// client.setEmail("mat@gmail.com");
+			// client.setPassword("12345678");
+			// daoClient.save(client);
 			// Evenement event = new Evenement();
 			// EvenementDao dao = new EvenementDao();
 			// event.setNomEvent("Concert Geant");

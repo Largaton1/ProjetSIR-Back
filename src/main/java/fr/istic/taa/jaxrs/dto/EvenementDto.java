@@ -1,18 +1,24 @@
 package fr.istic.taa.jaxrs.dto;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import fr.istic.taa.jaxrs.domain.Organisateur;
 import fr.istic.taa.jaxrs.domain.Ticket;
 import fr.istic.taa.jaxrs.domain.statutEvent;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class EvenementDto {
     
 
     private Long id;
     private String nomEvent;
-    private LocalDateTime date;
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date date;
     private String lieu;
     private String description;
     private int capacite;
@@ -26,7 +32,7 @@ public class EvenementDto {
     public EvenementDto() {
     }
 
-    public EvenementDto(Long id, String nomEvent, LocalDateTime date, String lieu, String description, int capacite,
+    public EvenementDto(Long id, String nomEvent, Date date, String lieu, String description, int capacite,
             statutEvent statut, List<TicketDto> tickets, Organisateur organisateur) {
         this.id = id;
         this.nomEvent = nomEvent;
@@ -53,10 +59,13 @@ public class EvenementDto {
     public void setNomEvent(String nomEvent) {
         this.nomEvent = nomEvent;
     }
-    public LocalDateTime getDate() {
+    
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    public Date getDate() {
         return date;
     }
-    public void setDate(LocalDateTime date) {
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    public void setDate(Date date) {
         this.date = date;
     }
     public String getLieu() {
@@ -89,9 +98,11 @@ public class EvenementDto {
     public void setTickets(List<TicketDto> tickets) {
         this.tickets = tickets;
     }
+    @JsonBackReference
     public Organisateur getOrganisateur() {
         return organisateur;
     }
+    @JsonBackReference
     public void setOrganisateur(Organisateur organisateur) {
         this.organisateur = organisateur;
     }
