@@ -1,4 +1,7 @@
 ## Application de Vente de Tickets de Concert en Ligne
+## Authors: 
+- KONE Cyril
+- NASSARA Loic
 
 # 1 . Etat d'avancement 
 
