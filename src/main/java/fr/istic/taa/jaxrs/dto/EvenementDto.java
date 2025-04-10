@@ -24,7 +24,8 @@ public class EvenementDto {
     private int capacite;
     private statutEvent statut;
     private List<TicketDto> tickets;
-    private Organisateur organisateur;
+    private OrganisateurDto organisateur;
+    private AdministrateurDto administrateur;
 
 
 
@@ -33,7 +34,9 @@ public class EvenementDto {
     }
 
     public EvenementDto(Long id, String nomEvent, Date date, String lieu, String description, int capacite,
-            statutEvent statut, List<TicketDto> tickets, Organisateur organisateur) {
+            statutEvent statut, 
+            //List<TicketDto> tickets,
+            OrganisateurDto organisateur, AdministrateurDto administrateur) {
         this.id = id;
         this.nomEvent = nomEvent;
         this.date = date;
@@ -43,7 +46,10 @@ public class EvenementDto {
         this.statut = statut;
         this.tickets = tickets;
         this.organisateur = organisateur;
+        this.administrateur = administrateur;
     }
+
+    
 
 
 
@@ -99,11 +105,22 @@ public class EvenementDto {
         this.tickets = tickets;
     }
     @JsonBackReference
-    public Organisateur getOrganisateur() {
+    public OrganisateurDto getOrganisateur() {
         return organisateur;
     }
     @JsonBackReference
-    public void setOrganisateur(Organisateur organisateur) {
+    public void setOrganisateur(OrganisateurDto organisateur) {
         this.organisateur = organisateur;
     }
+    @JsonBackReference
+    public AdministrateurDto getAdministrateur() {
+        return administrateur;
+    }
+    @JsonBackReference
+    public void setAdministrateur(AdministrateurDto administrateur) {
+        this.administrateur = administrateur;
+    }
+
+
+    
 }

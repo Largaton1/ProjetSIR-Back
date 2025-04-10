@@ -61,20 +61,54 @@ public Response getAllAdministrateurs() {
 
 
 @POST
+@Path("/login")
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+public Response loginAdministrateur(@FormParam("email") String email,
+@FormParam("password") String password) {
+    try {
+        AdministrateurDto admin = administrateurService.loginAdministrateur(email, password);
+        return Response.ok(admin).build();
+    } catch (RuntimeException e) {
+        return Response.status(Response.Status.UNAUTHORIZED)
+                        .entity("Login échoué : " + e.getMessage())
+                        .build();
+    }
+}
+
+
+@POST
 @Path("/add")
+// @Consumes(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED) // Accepte les données de formulaire
 @Produces(MediaType.APPLICATION_JSON) // Retourne du JSON
 public Response createAdmin(
-      AdministrateurDto admin) {
+    @FormParam("nom") String nom,
+    @FormParam("prenom") String prenom,
+    @FormParam("email") String email,
+    @FormParam("password") String password) {
+
+    // Création de l'AdministrateurDto
+    AdministrateurDto adminDto = new AdministrateurDto();
+    adminDto.setNom(nom);
+    adminDto.setPrenom(prenom);
+    adminDto.setEmail(email);
+    adminDto.setPassword(password);
+    
+    // On laisse la liste d'événements vide au départ
+    adminDto.setEvenement(List.of()); 
 
     // Sauvegarde via le service
-    administrateurService.createAdministrateur(admin);
+    administrateurService.createAdministrateur(adminDto);
 
-    // Retourner une réponse JSON
     return Response.status(Response.Status.CREATED)
-                   .entity(admin)
+                   .entity(adminDto)
                    .build();
 }
+
+
+
+
+
 
 @PUT
 @Path("/update/{id}")

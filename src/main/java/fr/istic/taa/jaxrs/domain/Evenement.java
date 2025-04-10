@@ -128,7 +128,7 @@ public class Evenement implements Serializable {
     }
 
     @ManyToOne
-    @JoinColumn(name = "administrateur_id", nullable = false)
+    @JoinColumn(name = "administrateur_id", nullable = true)
     public Administrateur getAdministrateur() {
         return administrateur;
     }

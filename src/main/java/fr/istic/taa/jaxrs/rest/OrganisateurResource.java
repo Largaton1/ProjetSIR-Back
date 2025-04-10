@@ -59,19 +59,47 @@ public Response getAllOrganisateurs() {
     return Response.ok(organisateurs).build();
 }
 
+@POST
+@Path("/login")
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+public Response loginOrganisateur(@FormParam("email") String email,
+@FormParam("password") String password) {
+    try {
+        OrganisateurDto organisateur = organisateurService.loginOrganisateur(email, password);
+        return Response.ok(organisateur).build();
+    } catch (RuntimeException e) {
+        return Response.status(Response.Status.UNAUTHORIZED)
+                        .entity("Login échoué : " + e.getMessage())
+                        .build();
+    }
+}
 
 @POST
 @Path("/add")
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED) // Accepte les données de formulaire
 @Produces(MediaType.APPLICATION_JSON) // Retourne du JSON
-public Response createOrganisateur(OrganisateurDto organisateur) {
+
+public Response createOrganisateur(
+    @FormParam("nom") String nom,
+    @FormParam("prenom") String prenom,
+    @FormParam("email") String email,
+    @FormParam("password") String password) {
+
+    // Création de l'RganisateurDto
+    OrganisateurDto organisateurdto = new OrganisateurDto();
+    organisateurdto.setNom(nom);
+    organisateurdto.setPrenom(prenom);
+    organisateurdto.setEmail(email);
+    organisateurdto.setPassword(password);
+    
+    // On laisse la liste d'événements vide au départ
+    organisateurdto.setEvenements(List.of()); 
 
     // Sauvegarde via le service
-    organisateurService.createOrganisateur(organisateur);
+    organisateurService.createOrganisateur(organisateurdto);
 
-    // Retourner une réponse JSON
     return Response.status(Response.Status.CREATED)
-                   .entity(organisateur)
+                   .entity(organisateurdto)
                    .build();
 }
 

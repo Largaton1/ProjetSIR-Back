@@ -5,6 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import fr.istic.taa.jaxrs.domain.Evenement;
+import fr.istic.taa.jaxrs.domain.Organisateur;
 
 public class OrganisateurDto extends PersonneDto{
     
@@ -19,6 +20,23 @@ public class OrganisateurDto extends PersonneDto{
         super(id, nom, prenom, email, password);
         this.evenements = evenements;
     }
+
+
+    public static OrganisateurDto fromEntity(Organisateur organisateur) {
+    if (organisateur == null) {
+        return null;
+    }
+
+    return new OrganisateurDto(
+        organisateur.getId(),
+        organisateur.getNom(),
+        organisateur.getPrenom(),
+        organisateur.getEmail(),
+        null,
+        null // On évite la récursion infinie en ne convertissant pas les événements ici
+    );
+}
+    
 
     @JsonManagedReference
     public List<EvenementDto> getEvenements() {

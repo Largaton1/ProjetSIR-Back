@@ -21,9 +21,25 @@ public class ClientService {
     }
 
 
+    public ClientDto loginClient(String email, String password) {
+        Client client = clientDao.findByEmail(email);
+
+        if (client != null && client.getPassword().equals(password)) {
+            return new ClientDto(
+                client.getId(),
+                client.getNom(),
+                client.getPrenom(),
+                client.getEmail(),
+                null, // On ne retourne pas le mot de passe
+                null
+            );
+        } else {
+            throw new RuntimeException("Email ou mot de passe incorrect");
+        }
+    }
+
     public ClientDto createClient(ClientDto clientDto) {
         Client client = new Client();
-        client.setId(clientDto.getId());
         client.setNom(clientDto.getNom());
         client.setPrenom(clientDto.getPrenom());
         client.setEmail(clientDto.getEmail());
@@ -46,8 +62,9 @@ public class ClientService {
                     ticket.getEvenement().getDescription(), 
                     ticket.getEvenement().getCapacite(), 
                     ticket.getEvenement().getStatut(), 
-                    null,  // Pas besoin de la liste des tickets ici
-                    null   // Organisateur non inclus pour éviter les références circulaires
+                     // Pas besoin de la liste des tickets ici
+                    null,   // Organisateur non inclus pour éviter les références circulaires
+                    null
                 ),  
                     new ClientDto(ticket.getClient().getId(), ticket.getClient().getNom(), ticket.getClient().getPrenom(),
                                 ticket.getClient().getEmail(), ticket.getClient().getPassword(), null)

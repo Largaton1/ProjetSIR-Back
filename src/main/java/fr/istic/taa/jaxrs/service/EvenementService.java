@@ -16,10 +16,13 @@ public class EvenementService {
 
     private TicketDao ticketDao;
 
+    private AdministrateurDao administrateurDao;
+
     public EvenementService() {
         organisateurDao = new OrganisateurDao();
         evenementDao = new EvenementDao();
         ticketDao = new TicketDao();
+        administrateurDao = new AdministrateurDao();
     }
 
 
@@ -32,18 +35,20 @@ public class EvenementService {
         evenement.setDescription(evenementDto.getDescription());
         evenement.setCapacite(evenementDto.getCapacite());
         evenement.setStatut(evenementDto.getStatut());
-        evenement.setTickets(ticketDao.findAll());
-        //evenement.setOrganisateur(organisateurDao.findOne(evenementDto.getOrganisateur()));
+        //evenement.setTickets(ticketDao.findAll());
+        evenement.setOrganisateur(organisateurDao.findOne(evenementDto.getOrganisateur().getId()));
+        evenement.setAdministrateur(administrateurDao.findOne(evenementDto.getAdministrateur().getId())); // Pas d'administrateur pour l'instant
         //evenement.setOrganisateur(organisateurDao.findOne(1L)); // Organisateur par défaut
+        //evenement.setOrganisateur(evenementDto.getOrganisateur());
         evenementDao.save(evenement);
-        return new EvenementDto(evenement.getId(), evenement.getNomEvent(), evenement.getDate(), evenement.getLieu(), evenement.getDescription(), evenement.getCapacite(), evenement.getStatut(), null, evenement.getOrganisateur());
+        return new EvenementDto(evenement.getId(), evenement.getNomEvent(), evenement.getDate(), evenement.getLieu(), evenement.getDescription(), evenement.getCapacite(), evenement.getStatut(), OrganisateurDto.fromEntity(evenement.getOrganisateur()), AdministrateurDto.fromEntityAdmin(evenement.getAdministrateur()));   
     }
 
     // Récupérer un événement par ID
     public EvenementDto getEvenementById(long id) {
         Evenement evenement = evenementDao.findOne(id);
         if (evenement != null) {
-            return new EvenementDto(evenement.getId(), evenement.getNomEvent(), evenement.getDate(), evenement.getLieu(), evenement.getDescription(), evenement.getCapacite(), evenement.getStatut(), null, evenement.getOrganisateur());
+            return new EvenementDto(evenement.getId(), evenement.getNomEvent(), evenement.getDate(), evenement.getLieu(), evenement.getDescription(), evenement.getCapacite(), evenement.getStatut(), OrganisateurDto.fromEntity(evenement.getOrganisateur()), AdministrateurDto.fromEntityAdmin(evenement.getAdministrateur()));
         }
         return null;
     }
@@ -51,7 +56,7 @@ public class EvenementService {
     // Récupérer tous les événements
     public List<EvenementDto> getAllEvenements() {
         return evenementDao.findAll().stream()
-                .map(evenement -> new EvenementDto(evenement.getId(), evenement.getNomEvent(), evenement.getDate(), evenement.getLieu(), evenement.getDescription(), evenement.getCapacite(), evenement.getStatut(), null, evenement.getOrganisateur()))
+                .map(evenement -> new EvenementDto(evenement.getId(), evenement.getNomEvent(), evenement.getDate(), evenement.getLieu(), evenement.getDescription(), evenement.getCapacite(), evenement.getStatut(), OrganisateurDto.fromEntity(evenement.getOrganisateur()), AdministrateurDto.fromEntityAdmin(evenement.getAdministrateur())))
                 .collect(Collectors.toList());
     }
 
@@ -67,7 +72,7 @@ public class EvenementService {
             evenement.setStatut(dto.getStatut());
             //evenement.setOrganisateur(organisateurDao.findOne(dto.getOrganisateur())); // Organisateur ne doit pas changer
             evenementDao.update(evenement);
-            return new EvenementDto(evenement.getId(), evenement.getNomEvent(), evenement.getDate(), evenement.getLieu(), evenement.getDescription(), evenement.getCapacite(), evenement.getStatut(), null, null);
+            return new EvenementDto(evenement.getId(), evenement.getNomEvent(), evenement.getDate(), evenement.getLieu(), evenement.getDescription(), evenement.getCapacite(), evenement.getStatut(), null,null);
         }
         return null;
     }

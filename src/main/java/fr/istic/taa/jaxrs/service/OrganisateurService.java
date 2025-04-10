@@ -15,6 +15,24 @@ public class OrganisateurService {
         organisateurDao = new OrganisateurDao();
     }
 
+
+    public OrganisateurDto loginOrganisateur(String email, String password) {
+        Organisateur organisateur = organisateurDao.findByEmail(email);
+
+        if (organisateur != null && organisateur.getPassword().equals(password)) {
+            return new OrganisateurDto(
+                organisateur.getId(),
+                organisateur.getNom(),
+                organisateur.getPrenom(),
+                organisateur.getEmail(),
+                null, // On ne retourne pas le mot de passe
+                null
+            );
+        } else {
+            throw new RuntimeException("Email ou mot de passe incorrect");
+        }
+    }
+
     // Ajouter un organisateur
     public OrganisateurDto createOrganisateur(OrganisateurDto organisateurDto) {
         Organisateur organisateur = new Organisateur();

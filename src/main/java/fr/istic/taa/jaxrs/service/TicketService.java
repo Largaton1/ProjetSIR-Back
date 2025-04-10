@@ -32,7 +32,7 @@ public class TicketService {
         ticketDao.save(ticket);
         return new TicketDto(ticket.getId(), ticket.getPrix(), ticket.getNumPlace(), ticket.isEstValide(), 
         new EvenementDto(ticket.getEvenement().getId(), ticket.getEvenement().getNomEvent(), ticket.getEvenement().getDate(), ticket.getEvenement().getDescription(), 
-        ticket.getEvenement().getLieu(),ticket.getEvenement().getCapacite(), ticket.getEvenement().getStatut(), null, ticket.getEvenement().getOrganisateur() ),
+        ticket.getEvenement().getLieu(),ticket.getEvenement().getCapacite(), ticket.getEvenement().getStatut(), OrganisateurDto.fromEntity(ticket.getEvenement().getOrganisateur()), AdministrateurDto.fromEntityAdmin(ticket.getEvenement().getAdministrateur()) ),
          null);
     }
 
@@ -42,7 +42,7 @@ public class TicketService {
         if (ticket != null) {
             return new TicketDto(ticket.getId(), ticket.getPrix(), ticket.getNumPlace(), ticket.isEstValide(), 
             new EvenementDto(ticket.getEvenement().getId(), ticket.getEvenement().getNomEvent(), ticket.getEvenement().getDate(), ticket.getEvenement().getDescription(), 
-            ticket.getEvenement().getLieu(),ticket.getEvenement().getCapacite(), ticket.getEvenement().getStatut(), null, ticket.getEvenement().getOrganisateur() ),
+            ticket.getEvenement().getLieu(),ticket.getEvenement().getCapacite(), ticket.getEvenement().getStatut(), OrganisateurDto.fromEntity(ticket.getEvenement().getOrganisateur()), AdministrateurDto.fromEntityAdmin(ticket.getEvenement().getAdministrateur()) ),
              null);
         }
         return null;
@@ -53,7 +53,7 @@ public class TicketService {
         return ticketDao.findAll().stream()
                 .map(ticket -> new TicketDto(ticket.getId(), ticket.getPrix(), ticket.getNumPlace(), ticket.isEstValide(), 
                 new EvenementDto(ticket.getEvenement().getId(), ticket.getEvenement().getNomEvent(), ticket.getEvenement().getDate(), ticket.getEvenement().getDescription(), 
-                ticket.getEvenement().getLieu(),ticket.getEvenement().getCapacite(), ticket.getEvenement().getStatut(), null, ticket.getEvenement().getOrganisateur() ),
+                ticket.getEvenement().getLieu(),ticket.getEvenement().getCapacite(), ticket.getEvenement().getStatut(), OrganisateurDto.fromEntity(ticket.getEvenement().getOrganisateur()), AdministrateurDto.fromEntityAdmin(ticket.getEvenement().getAdministrateur()) ),
                  null))
                 .collect(Collectors.toList());
     }
@@ -68,7 +68,7 @@ public class TicketService {
             ticketDao.update(ticket);
             return new TicketDto(ticket.getId(), ticket.getPrix(), ticket.getNumPlace(), ticket.isEstValide(), 
             new EvenementDto(ticket.getEvenement().getId(), ticket.getEvenement().getNomEvent(), ticket.getEvenement().getDate(), ticket.getEvenement().getDescription(), 
-            ticket.getEvenement().getLieu(),ticket.getEvenement().getCapacite(), ticket.getEvenement().getStatut(), null, ticket.getEvenement().getOrganisateur() ),
+            ticket.getEvenement().getLieu(),ticket.getEvenement().getCapacite(), ticket.getEvenement().getStatut(), OrganisateurDto.fromEntity(ticket.getEvenement().getOrganisateur()), AdministrateurDto.fromEntityAdmin(ticket.getEvenement().getAdministrateur()) ),
              null);
         }
         return null;

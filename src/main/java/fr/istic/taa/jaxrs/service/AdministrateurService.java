@@ -4,19 +4,46 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import fr.istic.taa.jaxrs.dao.AdministrateurDao;
+import fr.istic.taa.jaxrs.dao.ClientDao;
+import fr.istic.taa.jaxrs.dao.OrganisateurDao;
 import fr.istic.taa.jaxrs.domain.Administrateur;
+import fr.istic.taa.jaxrs.domain.Client;
+import fr.istic.taa.jaxrs.domain.Organisateur;
 import fr.istic.taa.jaxrs.dto.AdministrateurDto;
 
 public class AdministrateurService {
 
     private AdministrateurDao administrateurDao;
+    private ClientDao clientDao;
+    private OrganisateurDao organisateurDao;
 
     
 
     public AdministrateurService() {
         this.administrateurDao = new AdministrateurDao();
+        this.clientDao = new ClientDao();
+        this.organisateurDao = new OrganisateurDao();
     }
-    
+
+ 
+
+    public AdministrateurDto loginAdministrateur(String email, String password) {
+        Administrateur admin = administrateurDao.findByEmail(email);
+
+        if (admin != null && admin.getPassword().equals(password)) {
+            return new AdministrateurDto(
+                admin.getId(),
+                admin.getNom(),
+                admin.getPrenom(),
+                admin.getEmail(),
+                null, // On ne retourne pas le mot de passe
+                null
+            );
+        } else {
+            throw new RuntimeException("Email ou mot de passe incorrect");
+        }
+    }
+
     // Ajouter un administrateur
     public AdministrateurDto createAdministrateur(AdministrateurDto dtoadmin) {
         Administrateur admin = new Administrateur();
