@@ -37,7 +37,7 @@ Nous avons terminé le TP5 Des servlets aux services Web
 voici le lien  (http://localhost:8080/api/)
 
 
-![Diagramme UML](src/webapp/modele_metier.png)
+![Diagramme UML](modele_metier.png)
 
 
 
