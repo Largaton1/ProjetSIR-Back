@@ -59,22 +59,45 @@ public Response getAllClients() {
     return Response.ok(clients).build();
 }
 
+@POST
+@Path("/login")
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+public Response loginClient(@FormParam("email") String email,
+@FormParam("password") String password) {
+    try {
+        ClientDto client = clientService.loginClient(email, password);
+        return Response.ok(client).build();
+    } catch (RuntimeException e) {
+        return Response.status(Response.Status.UNAUTHORIZED)
+                        .entity("Login échoué : " + e.getMessage())
+                        .build();
+    }
+}
 
 @POST
 @Path("/add")
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED) // Accepte les données de formulaire
 @Produces(MediaType.APPLICATION_JSON) // Retourne du JSON
 public Response createClient(
-        ClientDto client) {
+    @FormParam("nom") String nom,
+    @FormParam("prenom") String prenom,
+    @FormParam("email") String email,
+    @FormParam("password") String password) {
 
   
-
+         // Création de l'AdministrateurDto
+    ClientDto client = new ClientDto();
+    client.setNom(nom);
+    client.setPrenom(prenom);
+    client.setEmail(email);
+    client.setPassword(password);
+    client.setTicket(List.of());
     // Sauvegarde via le service
-    clientService.createClient(client);
+    ClientDto savedClient = clientService.createClient(client);
 
     // Retourner une réponse JSON
     return Response.status(Response.Status.CREATED)
-                   .entity(client)
+                   .entity(savedClient)
                    .build();
 }
 

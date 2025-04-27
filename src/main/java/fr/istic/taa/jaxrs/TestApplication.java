@@ -40,6 +40,7 @@ public class TestApplication extends Application {
         clazzes.add(fr.istic.taa.jaxrs.rest.EvenementResource.class);
         clazzes.add(fr.istic.taa.jaxrs.rest.TicketResource.class);
         clazzes.add(fr.istic.taa.jaxrs.rest.SwaggerResource.class);
+        clazzes.add(fr.istic.taa.jaxrs.config.CorsFilter.class);
 //        clazzes.add(AcceptHeaderOpenApiResource.class);
          
 

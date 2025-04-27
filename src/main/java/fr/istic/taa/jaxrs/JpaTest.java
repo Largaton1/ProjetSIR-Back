@@ -9,19 +9,19 @@ public class JpaTest {
 
 	private EntityManager manager;
 
-	/* public JpaTest(EntityManager manager) {
+	 public JpaTest(EntityManager manager) {
 		this.manager = manager;
-	} */
+	} 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		/* 	EntityManager manager = EntityManagerHelper.getEntityManager();
+		EntityManager manager = EntityManagerHelper.getEntityManager();
 
 		JpaTest test = new JpaTest(manager);
 
 		EntityTransaction tx = manager.getTransaction();
-		tx.begin(); */
+		tx.begin(); 
 
 		
 		try {
@@ -76,12 +76,12 @@ public class JpaTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		/* tx.commit();
+		 tx.commit();
 
 			
    	 manager.close();
 		EntityManagerHelper.closeEntityManagerFactory();
-		System.out.println(".. done"); */
+		System.out.println(".. done"); 
 	}
 
 
