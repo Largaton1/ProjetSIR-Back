@@ -24,22 +24,12 @@ Nous avons terminé le TP5 Des servlets aux services Web
     -Pour les classe EvenementResource, TicketResource les méthodes 
         getById, getAll, delete fonctionne aussi bien via le swagger
 
-# Ce qui ne marche pas
-    
-    Concernant la couche REST
-    -Pour les classe EvenementResource, TicketResource les méthodes 
-        Create et update ne marche pas encore, on n'avait rencontré un problème concernant le LocalDateTime qui n'est pas reconnu pas JSON, du coup nous avons changer le type des dates en Date de Java.util.sql et deplus nous avons ajouté le @JsonFormat(pattern = « yyyy-MM-dd ») sur les méthode de récupération des dates.
 
-
-# La Prochaine étape
-
-    - Revoir les méthodes create et update des classes EvenementResource et TicketResource 
-    - Ensuite revoir notre modèle métier, on veut la faire évoluer en ajoutant les classes PremiumTicket et LastMinuteTicket qui vont hérité de la classe Ticket, ajouter aussi une classe de paiement.
-    -Continuer par la suite avec la partie JS TP6 et le TP7
 
 # Démarrage du projet
 
-    -Exécuter le fichier RestServer.java
+    -Exécuter d'abord le fichier JpaTest.java pour la création de la base de donnée Mysql
+    -Exécuter ensuite le fichier RestServer.java
     -pour besoin de persister des donner dans la base de donner manuellement vous pouver modifier dans le fichier JpaTest.java et l'exécuter 
 
 # Pour accéder à l'api via le swagger 
@@ -47,7 +37,7 @@ Nous avons terminé le TP5 Des servlets aux services Web
 voici le lien  (http://localhost:8080/api/)
 
 
-
+![Diagramme UML](src/webapp/modele_metier.png)
 
 
 
