@@ -93,11 +93,11 @@ public Response createClient(
     client.setPassword(password);
     client.setTicket(List.of());
     // Sauvegarde via le service
-    clientService.createClient(client);
+    ClientDto savedClient = clientService.createClient(client);
 
     // Retourner une réponse JSON
     return Response.status(Response.Status.CREATED)
-                   .entity(client)
+                   .entity(savedClient)
                    .build();
 }
 

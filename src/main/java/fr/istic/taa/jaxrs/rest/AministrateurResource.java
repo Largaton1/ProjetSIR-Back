@@ -98,10 +98,10 @@ public Response createAdmin(
     adminDto.setEvenement(List.of()); 
 
     // Sauvegarde via le service
-    administrateurService.createAdministrateur(adminDto);
+    AdministrateurDto savedAdministrateur  = administrateurService.createAdministrateur(adminDto);
 
     return Response.status(Response.Status.CREATED)
-                   .entity(adminDto)
+                   .entity(savedAdministrateur )
                    .build();
 }
 

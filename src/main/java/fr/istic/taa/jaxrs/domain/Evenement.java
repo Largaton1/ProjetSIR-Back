@@ -29,7 +29,7 @@ public class Evenement implements Serializable {
     private String lieu;
     private String description;
     private int capacite;
-    private statutEvent statut;
+    private statutEvent statut = statutEvent.Enattente;   // par Défaut ici
     private List<Ticket> tickets;
     private Organisateur organisateur;
    
@@ -53,6 +53,16 @@ public class Evenement implements Serializable {
         this.description = description;
         this.capacite = capacite;
         this.statut = statut;
+    }
+
+    public Evenement(Long id, String nomEvent, Date date, String lieu, String description, int capacite) {
+        this.id = id;
+        this.nomEvent = nomEvent;
+        this.date = date;
+        this.lieu = lieu;
+        this.description = description;
+        this.capacite = capacite;
+        this.statut = statutEvent.EnCours; // par Défaut ici
     }
 
    

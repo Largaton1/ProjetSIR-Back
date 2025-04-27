@@ -22,7 +22,7 @@ public class EvenementDto {
     private String lieu;
     private String description;
     private int capacite;
-    private statutEvent statut;
+    private statutEvent statut = statutEvent.Enattente;   // par Défaut ici
     private List<TicketDto> tickets;
     private OrganisateurDto organisateur;
     private AdministrateurDto administrateur;
@@ -44,10 +44,26 @@ public class EvenementDto {
         this.description = description;
         this.capacite = capacite;
         this.statut = statut;
-        this.tickets = tickets;
+        //this.tickets = tickets;
         this.organisateur = organisateur;
         this.administrateur = administrateur;
     }
+
+    public EvenementDto(Long id, String nomEvent, Date date, String lieu, String description, int capacite,
+         
+        //List<TicketDto> tickets,
+        OrganisateurDto organisateur, AdministrateurDto administrateur) {
+        this.id = id;
+        this.nomEvent = nomEvent;
+        this.date = date;
+        this.lieu = lieu;
+        this.description = description;
+        this.capacite = capacite;
+        this.statut = statutEvent.Enattente; // par Défaut ici
+        //this.tickets = tickets;
+        this.organisateur = organisateur;
+        this.administrateur = administrateur;
+        }
 
     
 

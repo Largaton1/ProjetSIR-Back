@@ -96,10 +96,10 @@ public Response createOrganisateur(
     organisateurdto.setEvenements(List.of()); 
 
     // Sauvegarde via le service
-    organisateurService.createOrganisateur(organisateurdto);
+    OrganisateurDto savedOrganisateur  = organisateurService.createOrganisateur(organisateurdto);
 
     return Response.status(Response.Status.CREATED)
-                   .entity(organisateurdto)
+                   .entity(savedOrganisateur)
                    .build();
 }
 

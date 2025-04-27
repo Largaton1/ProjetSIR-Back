@@ -68,42 +68,15 @@ public Response getAllEvenements() {
 
 @POST
 @Path("/add")
-/* @Consumes(MediaType.APPLICATION_JSON) // Accepte les données de formulaire
-@Produces(MediaType.APPLICATION_JSON) // Retourne du JSON
-public Response createEvenement(
-    EvenementDto evenement) {
-
-    
-
-    // Sauvegarde via le service
-    evenementService.createEvenement(evenement);
-
-    // Retourner une réponse JSON
-    return Response.status(Response.Status.CREATED)
-                   .entity(evenement)
-                   .build();
-} */
-
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED) 
-@Produces(MediaType.APPLICATION_JSON)
-@io.swagger.v3.oas.annotations.parameters.RequestBody(
-    content = @Content(
-        mediaType = "application/x-www-form-urlencoded",
-        encoding = {
-            @Encoding(name = "nomEvent", contentType = "text/plain; charset=UTF-8"),
-            @Encoding(name = "lieu", contentType = "text/plain; charset=UTF-8"),
-            @Encoding(name = "description", contentType = "text/plain; charset=UTF-8"),
-          
-        }
-    )
-)
+@Produces(MediaType.APPLICATION_JSON) 
 public Response createEvenement(
     @FormParam("nomEvent") String nomEvent,
     @FormParam("date") Date dateStr,  
     @FormParam("lieu") String lieu,
     @FormParam("description") String description,
     @FormParam("capacite") int capacite,
-    @FormParam("statut") String statutStr, // 📌 Reçu en tant que String
+    //@FormParam("statut") String statutStr, // 📌 Reçu en tant que String
     @FormParam("organisateurId") Long organisateurId,
     @FormParam("administrateurId") Long administrateurId
     ) {
@@ -116,12 +89,12 @@ public Response createEvenement(
                        .build();
     }
     
-    AdministrateurDto administrateur = new AdministrateurService().getAdministrateurById(administrateurId);
-    if (administrateur == null) {
-        return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Administrateur non trouvé pour l'ID fourni.")
-                    .build();
-    }
+    // AdministrateurDto administrateur = new AdministrateurService().getAdministrateurById(administrateurId);
+    // if (administrateur == null) {
+    //     return Response.status(Response.Status.NOT_FOUND)
+    //                 .entity("Administrateur non trouvé pour l'ID fourni.")
+    //                 .build();
+    // }
 
     // 📌 Convertir la date (format "yyyy-MM-dd")
     Date date;
@@ -134,14 +107,14 @@ public Response createEvenement(
     }
 
     // 📌 Convertir statutEvent (Enum)
-    statutEvent statut;
-    try {
-        statut = statutEvent.valueOf(statutStr); // 🔥 Conversion String → Enum
-    } catch (IllegalArgumentException e) {
-        return Response.status(Response.Status.BAD_REQUEST)
-                       .entity("Statut invalide, valeurs acceptées : EnCours, Annule, Termine")
-                       .build();
-    }
+    // statutEvent statut;
+    // try {
+    //     statut = statutEvent.valueOf(statutStr); // 🔥 Conversion String → Enum
+    // } catch (IllegalArgumentException e) {
+    //     return Response.status(Response.Status.BAD_REQUEST)
+    //                    .entity("Statut invalide, valeurs acceptées : EnCours, Annule, Termine")
+    //                    .build();
+    // }
 
     // 📌 Créer l'objet Evenement
     EvenementDto evenementDto = new EvenementDto();
@@ -150,9 +123,22 @@ public Response createEvenement(
     evenementDto.setLieu(lieu);
     evenementDto.setDescription(description);
     evenementDto.setCapacite(capacite);
-    evenementDto.setStatut(statut); // 📌 Associer le statut
+    //evenementDto.setStatut(statut); // 📌 Associer le statut
    evenementDto.setOrganisateur(organisateur); // 📌 Associer l'organisateur
-   evenementDto.setAdministrateur(administrateur);
+   //evenementDto.setAdministrateur(administrateur);
+
+   // 🔸 Administrateur est optionnel
+   if (administrateurId != null) {
+    AdministrateurDto administrateur = new AdministrateurService().getAdministrateurById(administrateurId);
+    if (administrateur == null) {
+        return Response.status(Response.Status.NOT_FOUND)
+                       .entity("Administrateur non trouvé pour l'ID fourni.")
+                       .build();
+    }
+    evenementDto.setAdministrateur(administrateur);
+} else {
+    evenementDto.setAdministrateur(null); // Aucun administrateur associé
+}
 
     // 📌 Sauvegarde via le service
     evenementService.createEvenement(evenementDto);
@@ -162,21 +148,29 @@ public Response createEvenement(
                    .build();
 }
 
+
+@PUT
+@Path("/update-statut/{id}")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+public Response updateStatutEvenement(@PathParam("id") Long idEvenement, StatutUpdateDto statutUpdateDto) {
+    try {
+        EvenementDto updated = evenementService.updateStatutEvenement(
+            idEvenement,
+            statutUpdateDto.getNouveauStatut(),
+            statutUpdateDto.getAdministrateurId()
+        );
+        return Response.ok(updated).build();
+    } catch (IllegalArgumentException e) {
+        return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+    }
+}
+
+
 @PUT
 @Path("/update/{id}")
 @Consumes(MediaType.APPLICATION_JSON) // Accepte les données en JSON
 @Produces(MediaType.APPLICATION_JSON) // Retourne du JSON
-@io.swagger.v3.oas.annotations.parameters.RequestBody(
-    content = @Content(
-        mediaType = "application/x-www-form-urlencoded",
-        encoding = {
-            @Encoding(name = "nomEvent", contentType = "text/plain; charset=UTF-8"),
-            @Encoding(name = "lieu", contentType = "text/plain; charset=UTF-8"),
-            @Encoding(name = "description", contentType = "text/plain; charset=UTF-8"),
-          
-        }
-    )
-)
 public Response updateEvenement(@PathParam("id") long id, EvenementDto evenementDetails) {
     if (evenementDetails == null) {
         return Response.status(Response.Status.BAD_REQUEST)
@@ -196,6 +190,19 @@ public Response updateEvenement(@PathParam("id") long id, EvenementDto evenement
 
     // Retourner l'evenement mis à jour
     return Response.ok(evenementdto).build();
+}
+
+
+@GET
+@Path("/organisateur/{id}")
+@Produces(MediaType.APPLICATION_JSON)
+public Response getEvenementsByOrganisateur(@PathParam("id") Long organisateurId) {
+    try {
+        List<EvenementDto> evenements = evenementService.getEvenementsByOrganisateurId(organisateurId);
+        return Response.ok(evenements).build();
+    } catch (IllegalArgumentException e) {
+        return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+    }
 }
 
 
